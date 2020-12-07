@@ -10,6 +10,8 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+let employeeArr = [];
+
 function teamQuestions(){
 inquirer
     .prompt([
@@ -56,10 +58,9 @@ inquirer
             }, 
     ]).then((response) => {
         console.log(response);
-        employeeArr = [];
-        
+                
         if(response.role === 'Manager') {
-            const NewManager = new Manager(response.name. response.id, response.email, response.officeNumber);
+            const NewManager = new Manager(response.name, response.id, response.email, response.officeNumber);
 
             employeeArr.push(NewManager)
 
@@ -69,17 +70,16 @@ inquirer
             employeeArr.push(NewEngineer)
 
         } else if(response.role === 'Intern') {
-            const NewIntern = new Intern(response.name. response.id, response.email, response.school)
+            const NewIntern = new Intern(response.name, response.id, response.email, response.school)
 
             employeeArr.push(NewIntern)
         }
 
-        if(response.moreTeamMembers){ //this isn't looping the questions when i selecty manager or intern
+        if(response.moreTeamMembers){ 
             teamQuestions();
         
         }else {
             console.log(employeeArr);
-            render(employeeArr);//is this necessary?
 
             fs.writeFile(outputPath, render(employeeArr), (err) =>
             err ? console.log(err) : console.log('Success!')
