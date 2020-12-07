@@ -17,39 +17,39 @@ inquirer
     .prompt([
                 {
             type: 'list',
-            messaage: 'What is your role?',
+            messaage: 'What is this persons role?',
             name: 'role',
             choices: ['Manager', 'Engineer', 'Intern']
         },{
             type: 'input',
-            message: 'What is your name?',
+            message: 'What is their name?',
             name: 'name'
         },{
             type: 'input',
-            message: 'What is your ID number?',
+            message: 'What is their ID number?',
             name: 'id'
         },{
             type: 'input',
-            message: 'What is your email address?',
+            message: 'What is their email address?',
             name: 'email'
         }, 
         {
             when: (response) => response.role === 'Manager',      
             type:'input',
             name: 'officeNumber',
-            message:'Please input your office number'
+            message:'Please input their office number'
         },
         {
             when: (response) => response.role === 'Engineer',
             type:'input',
             name: 'github',
-            message:'Please input in your github username:'
+            message:'Please input in their github username:'
         },
         {
             when: (response) => response.role === 'Intern',
             type:'input',
             name: 'school',
-            message:'Which school are you enrolled in?'
+            message:'Which school are they enrolled in?'
         },
         {
             type: 'confirm',
@@ -57,7 +57,6 @@ inquirer
             name: 'moreTeamMembers',
             }, 
     ]).then((response) => {
-        console.log(response);
                 
         if(response.role === 'Manager') {
             const NewManager = new Manager(response.name, response.id, response.email, response.officeNumber);
@@ -79,8 +78,6 @@ inquirer
             teamQuestions();
         
         }else {
-            console.log(employeeArr);
-
             fs.writeFile(outputPath, render(employeeArr), (err) =>
             err ? console.log(err) : console.log('Success!')
           );
